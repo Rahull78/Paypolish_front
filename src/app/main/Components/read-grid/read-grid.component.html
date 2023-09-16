@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="scrollbar">
+    <!-- <div class="dropDownSection">
+      Two Date Pickers
+    </div> -->
+    <kendo-grid [data]="gridData" (edit)="DateFilter($event)">
+      <ng-template kendoGridToolbarTemplate>
+        <button kendoButton [primary]="true" (click)="MonthFilter()">Call Month Api</button>
+      </ng-template>
+      <kendo-grid-column field="date" title="Date"> </kendo-grid-column>
+      <kendo-grid-command-column title="Action" [width]="220">
+        <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand [primary]="true">Fetch</button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  </div>
+
+  <div class="mainGrid">
+    <kendo-grid [data]="gridData">
+      <ng-template kendoGridToolbarTemplate>
+        <button kendoGridPDFCommand [primary]="true">Save As PDF</button>
+      </ng-template>
+      <kendo-grid-column field="id" title="ID"> </kendo-grid-column>
+      <kendo-grid-column field="date" title="Date"> </kendo-grid-column>
+      <kendo-grid-column field="recieve" title="Recieve"> </kendo-grid-column>
+      <kendo-grid-column field="issue" title="Issue">
+        <ng-template kendoGridFooterTemplate>
+          Total : {{ FooterIssue }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="pick" title="Pick"> </kendo-grid-column>
+      <kendo-grid-column field="touch" title="Touch">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.touch }}
+          <!-- <kendo-dropdownlist [data]="areaList"></kendo-dropdownlist> -->
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="loss" title="Loss">
+        <ng-template kendoGridFooterTemplate>
+          Total : {{ FooterLoss }}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="fine" title="Fine">
+        <ng-template kendoGridFooterTemplate>
+          Total : {{ FooterFine }}
+        </ng-template>
+      </kendo-grid-column>
+
+      <!-- PDF Export -->
+      <kendo-grid-pdf
+        fileName="Products.pdf"
+        [allPages]="true"
+        paperSize="A4"
+        [repeatHeaders]="true"
+        [landscape]="true"
+      >
+        <kendo-grid-pdf-margin
+          top="2cm"
+          left="1cm"
+          right="1cm"
+          bottom="2cm"
+        ></kendo-grid-pdf-margin>
+      </kendo-grid-pdf>
+      <!-- PDF Export -->
+    </kendo-grid>
+  </div>
+</div>

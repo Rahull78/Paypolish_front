@@ -1,0 +1,136 @@
+<!-- <p>data-grid works!</p> -->
+<kendo-grid
+  [data]="gridData"
+  (edit)="editHandler($event)"
+  (remove)="removeHandler($event)"
+  (add)="addHandler()"
+>
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand [primary]="true">Add new</button>
+  </ng-template>
+  <kendo-grid-column field="id" title="ID"> </kendo-grid-column>
+  <kendo-grid-column field="date" title="Date"> </kendo-grid-column>
+  <kendo-grid-column field="recieve" title="Recieve"> </kendo-grid-column>
+  <kendo-grid-column field="issue" title="Issue">
+    <ng-template kendoGridFooterTemplate>
+      Total : {{ FooterIssue }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="pick" title="Pick"> </kendo-grid-column>
+  <kendo-grid-column field="touch" title="Touch">
+    <ng-template kendoGridCellTemplate let-dataItem>
+      {{ dataItem.touch }}
+      <!-- <kendo-dropdownlist [data]="areaList"></kendo-dropdownlist> -->
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="loss" title="Loss">
+    <ng-template kendoGridFooterTemplate>
+      Total : {{ FooterLoss }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-column field="fine" title="Fine">
+    <ng-template kendoGridFooterTemplate>
+      Total : {{ FooterFine }}
+    </ng-template>
+  </kendo-grid-column>
+  <kendo-grid-command-column title="Command" [width]="220">
+    <ng-template kendoGridCellTemplate>
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Delete</button>
+    </ng-template>
+  </kendo-grid-command-column>
+</kendo-grid>
+
+<kendo-dialog *ngIf="opened" (close)="close()">
+  <kendo-dialog-titlebar> {{ DialogTitle }} </kendo-dialog-titlebar>
+
+  <div class="maincontainer" [formGroup]="DataForm">
+    <div class="center">
+      <kendo-label labelCssClass="k-form-label" text="Date"></kendo-label>
+      <kendo-datepicker
+        formControlName="date"
+        [format]="shortFormat"
+        [max]="CurrentDate"
+      >
+        <!-- [min]="min"-->
+      </kendo-datepicker>
+    </div>
+
+    <!-- Dialog Boxes Style-->
+    <div class="container">
+      <div class="leftbox">
+        <kendo-label class="k-form" text="Recieve">
+          <kendo-numerictextbox
+            [style.width.px]="170"
+            [decimals]="decimals"
+            [format]="format"
+            [value]="value"
+            formControlName="recieve"
+            (valueChange)="CalculateChange()"
+          ></kendo-numerictextbox>
+        </kendo-label>
+
+        <kendo-label class="k-form" text="Issue">
+          <kendo-numerictextbox
+            [style.width.px]="170"
+            [decimals]="decimals"
+            [format]="format"
+            [value]="value"
+            formControlName="issue"
+            (valueChange)="CalculateChange()"
+          ></kendo-numerictextbox>
+        </kendo-label>
+
+        <!-- HEre -->
+        <kendo-label class="k-form" text="Loss">
+          <kendo-textbox
+            [placeholder]="GlobalLoss"
+            formControlName="loss"
+            [value]="GlobalLoss"
+            [readonly]="true"
+          >
+          </kendo-textbox>
+        </kendo-label>
+      </div>
+
+      <div class="rightbox">
+        <kendo-label class="k-form" text="Touch">
+          <kendo-dropdownlist
+            [data]="touchList"
+            [defaultItem]="defaultTouch"
+            formControlName="touch"
+            (valueChange)="DropDownChange()"
+          >
+            <!-- (valueChange)="CalculateChange()" -->
+          </kendo-dropdownlist>
+        </kendo-label>
+
+        <kendo-label class="k-form" text="Pick">
+          <kendo-numerictextbox
+            [style.width.px]="170"
+            [decimals]="decimals"
+            [format]="format"
+            [value]="value"
+            formControlName="pick"
+          ></kendo-numerictextbox>
+        </kendo-label>
+
+        <kendo-label class="k-form" text="Fine">
+          <kendo-textbox
+            [placeholder]="GlobalFine"
+            [value]="GlobalFine"
+            [readonly]="true"
+            formControlName="fine"
+          >
+          </kendo-textbox>
+        </kendo-label>
+      </div>
+    </div>
+    <!-- Dialog Boxes Style-->
+  </div>
+
+  <kendo-dialog-actions>
+    <button kendoButton (click)="close()">Cancel</button>
+    <button kendoButton (click)="Submit()" themeColor="primary">Submit</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

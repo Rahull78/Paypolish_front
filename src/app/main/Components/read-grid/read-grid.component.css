@@ -1,0 +1,23 @@
+.container{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.scrollbar{
+  width: 23%;
+  height: 100%;
+}
+
+.mainGrid{
+  width: 73%;
+  height: 1--;
+}
+
+.dropDownSection{
+  margin-top: 35px;
+  width: 100%;
+}
